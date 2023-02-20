@@ -9,6 +9,9 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 from discord.ext import commands
+from pytz import timezone
+
+datetime.now(timezone('Asia/Seoul'))
 
 PREFIX = os.environ['PREFIX']
 TOKEN = os.environ['TOKEN']
@@ -42,6 +45,7 @@ async def init(ctx):
 #send today nord war list (1stage)
 @bot.command()
 async def setTd(ctx):
+    print(datetime.today())
     global today_nws, full_num, np_tdnw, crnt_num
     full_num = 0
     np_tdnw = 0
@@ -146,7 +150,22 @@ async def tdInfo(ctx):
     d = '```'+'\n'.join(s)+'```'
     embed = discord.Embed(title = '금일 거점 지역', description =d)
     await ctx.channel.send(embed=embed)
+
+@bot.command()
+async def help(ctx):
+    global today_nw
+    s = [""]
+    s.append("!setTd : 오늘자 거점전 초기화")
+    s.append("!setNw 거점명 : 오늘자 거점 지역 지정(띄워쓰기 빼고 쓸것)")
+    s.append("!join : 오늘자 거점 참여")
+    s.append("!cancle : 오늘자 거점 참여 취소")
+    s.append("!usrls : 오늘자 거점 참여자 목록")
+    s.append("!tdInfo : 오늘자 거점 정보")
     
+    d = '```'+'\n'.join(s)+'```'
+    embed = discord.Embed(title = '명령어 목록', description =d)
+    await ctx.channel.send(embed=embed)
+
 try:
     bot.run(TOKEN)
 except discord.errors.LoginFailure as e:
