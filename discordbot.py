@@ -11,7 +11,7 @@ from datetime import datetime
 from discord.ext import commands
 from pytz import timezone
 
-datetime.now(timezone('Asia/Seoul'))
+
 
 PREFIX = os.environ['PREFIX']
 TOKEN = os.environ['TOKEN']
@@ -30,6 +30,8 @@ wd = {0:'월요일', 1:'화요일', 2:'수요일',3:'목요일',4:'금요일',5:
 @bot.event
 async def on_ready():
     print("Bot is ready")
+    datetime.now(timezone('Asia/Seoul'))
+    print(datetime.today())
     await bot.change_presence(status=discord.Status.online, activity=discord.Game("AV"))
 
 full_num = 0
@@ -45,7 +47,6 @@ async def init(ctx):
 #send today nord war list (1stage)
 @bot.command()
 async def setTd(ctx):
-    print(datetime.today())
     global today_nws, full_num, np_tdnw, crnt_num
     full_num = 0
     np_tdnw = 0
