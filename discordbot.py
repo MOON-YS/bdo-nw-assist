@@ -147,10 +147,6 @@ async def tdInfo(ctx):
     embed = discord.Embed(title = '금일 거점 지역', description =d)
     await ctx.channel.send(embed=embed)
     
-@bot.command()
-async def help(ctx):
-    await ctx.channel.send("adag")
-
 try:
     bot.run(TOKEN)
 except discord.errors.LoginFailure as e:
