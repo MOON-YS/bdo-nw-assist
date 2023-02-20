@@ -30,8 +30,8 @@ wd = {0:'월요일', 1:'화요일', 2:'수요일',3:'목요일',4:'금요일',5:
 @bot.event
 async def on_ready():
     print("Bot is ready")
-    datetime.now(timezone('Asia/Seoul'))
-    print(datetime.today())
+
+    print(datetime.now(timezone('Asia/Seoul')))
     await bot.change_presence(status=discord.Status.online, activity=discord.Game("AV"))
 
 full_num = 0
@@ -51,7 +51,7 @@ async def setTd(ctx):
     full_num = 0
     np_tdnw = 0
     crnt_num = 0
-    today_nws = nw_data[nw_data['date']==wd[datetime.today().weekday()]].astype(str)
+    today_nws = nw_data[nw_data['date']==wd[datetime.now(timezone('Asia/Seoul')).weekday()]].astype(str)
     
     s = [""]
     for i in range(0, today_nws['area'].count()):
@@ -64,7 +64,7 @@ async def setTd(ctx):
 async def setNw(ctx, arg=None):
     global today_nw, full_num, np_tdnw
     
-    if today_nws['date'].iloc[0] != wd[datetime.today().weekday()]:     
+    if today_nws['date'].iloc[0] != wd[datetime.now(timezone('Asia/Seoul')).weekday()]:     
         await ctx.channel.send("Err: Today Nord war is not updated! please enter !updateTd")
         return;
     
