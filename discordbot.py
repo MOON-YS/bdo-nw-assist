@@ -152,7 +152,7 @@ async def tdInfo(ctx):
     await ctx.channel.send(embed=embed)
 
 @bot.command()
-async def help(ctx):
+async def h(ctx):
     global today_nw
     s = [""]
     s.append("!setTd : 오늘자 거점전 초기화")
