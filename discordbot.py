@@ -154,7 +154,6 @@ async def tdInfo(ctx):
 
 @bot.command()
 async def h(ctx):
-    global today_nw
     s = [""]
     s.append("!setTd : 오늘자 거점전 초기화")
     s.append("!setNw 거점명 : 오늘자 거점 지역 지정(띄워쓰기 빼고 쓸것)")
@@ -166,6 +165,20 @@ async def h(ctx):
     d = '```'+'\n'.join(s)+'```'
     embed = discord.Embed(title = '명령어 목록', description =d)
     await ctx.channel.send(embed=embed)
+    
+class MyHelp(commands.HelpCommand):
+
+    async def send_command_help(self, command):
+        """This is triggered when !help <command> is invoked."""
+        s = [""]
+        s.append("!setTd : 오늘자 거점전 초기화")
+        s.append("!setNw 거점명 : 오늘자 거점 지역 지정(띄워쓰기 빼고 쓸것)")
+        s.append("!join : 오늘자 거점 참여")
+        s.append("!cancle : 오늘자 거점 참여 취소")
+        s.append("!usrls : 오늘자 거점 참여자 목록")
+        s.append("!tdInfo : 오늘자 거점 정보")
+    
+bot.help_command = MyHelp()
 
 try:
     bot.run(TOKEN)
