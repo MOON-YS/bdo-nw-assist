@@ -149,10 +149,7 @@ async def tdInfo(ctx):
     
 @bot.command()
 async def help(ctx):
-    await ctx.channel.send()
-
-
-bot.run('MTA3MTgwNTQyMDI5NDkwMTgwMA.GJ-C5I.VwxoaHEblXw_KuNCY7MbbFf6QAb7qo3FhsT8EQ')
+    await ctx.channel.send("adag")
 
 try:
     bot.run(TOKEN)
