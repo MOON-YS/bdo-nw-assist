@@ -38,22 +38,22 @@ async def on_ready():
 full_num = 0
 crnt_num = 0
 np_tdnw = 0
-
+"""
 def roleCheck(ctx):
     roleA = discord.utils.get(ctx.guild.role, name="아카라이브") in ctx.author.roles
     roleV = discord.utils.get(ctx.guild.role, name="VESPER") in ctx.author.roles
     if roleA | roleV:
         return False
     else: return True
-    
+"""
 crnt_usr = pd.DataFrame(columns=['name','guild'])
 crnt_usr.head(10)
 
 #send today nord war list (1stage)
 @bot.command()
 async def setTd(ctx):
-    if ctx.author.top_role.permissions.administrator:
-        await ctx.channel.send("권한이 없습니다.")
+    if not ctx.author.top_role.permissions.administrator:
+        await ctx.channel.send(str(ctx.author.mention + "권한이 없습니다."))
         return;
     
     global today_nws, full_num, np_tdnw, crnt_num, crnt_usr
@@ -72,8 +72,8 @@ async def setTd(ctx):
 
 @bot.command()
 async def setNw(ctx, arg=None):
-    if ctx.author.top_role.permissions.administrator:
-        await ctx.channel.send("권한이 없습니다.")
+    if not ctx.author.top_role.permissions.administrator:
+        await ctx.channel.send(str(ctx.author.mention + "권한이 없습니다."))
         return;
     
     global today_nw, full_num, np_tdnw
@@ -104,10 +104,6 @@ async def setNw(ctx, arg=None):
     
 @bot.command()
 async def 신청(ctx):
-
-    if roleCheck(ctx):
-        await ctx.channel.send("권한이 없습니다.")
-        return;
     
     global crnt_num, crnt_usr, full_num
     
@@ -142,9 +138,6 @@ async def 신청(ctx):
 
 @bot.command()
 async def 취소(ctx):
-    if roleCheck(ctx):
-        await ctx.channel.send("권한이 없습니다.")
-        return;
     
     global crnt_num, crnt_usr, full_num
     
@@ -182,10 +175,7 @@ async def 참가자(ctx):
 
 @bot.command()
 async def 정보(ctx):
-    if roleCheck(ctx):
-        await ctx.channel.send("권한이 없습니다.")
-        return;
-    
+
     global today_nw
     s = [""]
     s.append(getNwInfoStr(today_nw.iloc[0]))
@@ -203,7 +193,7 @@ async def 명령어(ctx):
     s.append("!신청 : 오늘자 거점 참여 신청")
     s.append("!취소 : 오늘자 거점 참여 취소")
     s.append("!목록 : 오늘자 거점 참여자 목록")
-    s.append("!정보 : 오늘자 거점 정보")
+    s.append("!참가자 : 오늘자 거점 정보")
     
     d = '```'+'\n'.join(s)+'```'
     embed = discord.Embed(title = '명령어 목록', description =d)
