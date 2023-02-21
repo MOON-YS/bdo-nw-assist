@@ -153,13 +153,8 @@ async def 취소(ctx):
     usr_name = usr_name.replace(' ', '')
     usr_name = usr_name[usr_name.find(']')+1:]
     usr_n = crnt_usr[crnt_usr['name'] == usr_name].first_valid_index()
-    
-    print(usr_name)
-    print(crnt_usr['name'].str)
-    print(crnt_usr['name'].str.contains(usr_name))
-    print(len(crnt_usr['name'].str.contains(usr_name)[crnt_usr['name'].str.contains(usr_name)==True]))
-    
-    if(len(crnt_usr['name'].str.contains(usr_name)) == 0):
+
+    if(len(crnt_usr['name'].str.contains(usr_name)[crnt_usr['name'].str.contains(usr_name)==True]) == 0):
         await ctx.channel.send(str(ctx.author.mention + "참가하지 않은 유저입니다"))
         return
     
