@@ -91,7 +91,7 @@ async def setNw(ctx, arg=None):
         return;
     
     today_nw = today_nws[today_nws['area'].str.replace(' ','')==arg]
-    await ctx.channel.send(content = "@everyone"+f"{arg}이(가) 오늘의 거점전으로 설정되었습니다", allowed_mentions = discord.AllowedMentions(everyone = True))
+    await ctx.channel.send(content = ""+f"{arg}이(가) 오늘의 거점전으로 설정되었습니다", allowed_mentions = discord.AllowedMentions(everyone = True))
     np_tdnw = today_nw.to_numpy()
     full_num = int(np_tdnw[0][2])
     
@@ -153,10 +153,12 @@ async def 취소(ctx):
     usr_name = usr_name.replace(' ', '')
     usr_name = usr_name[usr_name.find(']')+1:]
     usr_n = crnt_usr[crnt_usr['name'] == usr_name].first_valid_index()
+    
     print(usr_name)
     print(crnt_usr['name'].str)
     print(crnt_usr['name'].str.contains(usr_name))
-    print(len(crnt_usr['name'].str.contains(usr_name)))
+    print(len(crnt_usr['name'].str.contains(usr_name)[crnt_usr['name'].str.contains(usr_name)==True]))
+    
     if(len(crnt_usr['name'].str.contains(usr_name)) == 0):
         await ctx.channel.send(str(ctx.author.mention + "참가하지 않은 유저입니다"))
         return
