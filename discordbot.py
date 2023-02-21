@@ -153,15 +153,17 @@ async def 취소(ctx):
     usr_name = usr_name.replace(' ', '')
     usr_name = usr_name[usr_name.find(']')+1:]
     usr_n = crnt_usr[crnt_usr['name'] == usr_name].first_valid_index()
-
-    
+    print(usr_name)
+    print(crnt_usr['name'].str)
+    print(crnt_usr['name'].str.contains(usr_name))
+    print(len(crnt_usr['name'].str.contains(usr_name)))
     if(len(crnt_usr['name'].str.contains(usr_name)) == 0):
         await ctx.channel.send(str(ctx.author.mention + "참가하지 않은 유저입니다"))
         return
     
-    crnt_num = crnt_num-1
     crnt_usr.drop(usr_n, axis=0, inplace=True)
     crnt_usr.reset_index(inplace=True, drop=True)
+    crnt_num = crnt_num-1
     await ctx.channel.send(str(ctx.author.mention + f"잘가시지~ {crnt_num}/{full_num}"))
 
 @bot.command()
