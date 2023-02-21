@@ -116,7 +116,7 @@ async def 신청(ctx):
         await ctx.channel.send(str("잘못된 이름형식입니다. [길드]가문명 으로 서버닉네임을 변경해주세요"))
         return
     
-    if (full_num):
+    if (full_num == 0):
         await ctx.channel.send(str(ctx.author.mention + "금일 거점이 설정되지 않았습니다."))
         return
     
