@@ -73,7 +73,7 @@ async def setTd(ctx):
 @bot.command()
 async def setNw(ctx, arg=None):
     if not ctx.author.top_role.permissions.administrator:
-        await ctx.channel.send(str(ctx.author.mention + "권한이 없습니다."))
+        await ctx.channel.send(str(ctx.author.mention + " 권한이 없습니다."))
         return;
     
     global today_nw, full_num, np_tdnw
@@ -91,7 +91,7 @@ async def setNw(ctx, arg=None):
         return;
     
     today_nw = today_nws[today_nws['area'].str.replace(' ','')==arg]
-    await ctx.channel.send(content = "@everyone"+f"{arg}이(가) 오늘의 거점전으로 설정되었습니다", allowed_mentions = discord.AllowedMentions(everyone = True))
+    await ctx.channel.send(content = "@everyone"+f" {arg}이(가) 오늘의 거점전으로 설정되었습니다", allowed_mentions = discord.AllowedMentions(everyone = True))
     np_tdnw = today_nw.to_numpy()
     full_num = int(np_tdnw[0][2])
     
@@ -117,11 +117,11 @@ async def 신청(ctx):
         return
     
     if (full_num == 0):
-        await ctx.channel.send(str(ctx.author.mention + "금일 거점이 설정되지 않았습니다."))
+        await ctx.channel.send(str(ctx.author.mention + " 금일 거점이 설정되지 않았습니다."))
         return
     
     if (crnt_num == full_num) :
-        await ctx.channel.send(str(ctx.author.mention + "만원!"))
+        await ctx.channel.send(str(ctx.author.mention + " 만원!"))
         return
     
     
@@ -132,13 +132,13 @@ async def 신청(ctx):
     usr_gld = usr_gld[usr_gld.find('[')+1:usr_gld.find(']')]
     
     if(crnt_usr['name']==usr_name).any():
-        await ctx.channel.send(str(ctx.author.mention + "이미 참가한 유저입니다"))
+        await ctx.channel.send(str(ctx.author.mention + " 이미 참가한 유저입니다"))
         return
     
     print(usr_name + " 이(가) 참여했습니다.")
     crnt_usr.loc[crnt_num] = [usr_name, usr_gld]
     crnt_num = crnt_num+1
-    await ctx.channel.send(str(ctx.author.mention + f"감사! {crnt_num}/{full_num}"))
+    await ctx.channel.send(str(ctx.author.mention + f" 감사! {crnt_num}/{full_num}"))
 
 @bot.command()
 async def 취소(ctx):
@@ -155,13 +155,13 @@ async def 취소(ctx):
     usr_n = crnt_usr[crnt_usr['name'] == usr_name].first_valid_index()
 
     if(len(crnt_usr['name'].str.contains(usr_name)[crnt_usr['name'].str.contains(usr_name)==True]) == 0):
-        await ctx.channel.send(str(ctx.author.mention + "참가하지 않은 유저입니다"))
+        await ctx.channel.send(str(ctx.author.mention + " 참가하지 않은 유저입니다"))
         return
     
     crnt_usr.drop(usr_n, axis=0, inplace=True)
     crnt_usr.reset_index(inplace=True, drop=True)
     crnt_num = crnt_num-1
-    await ctx.channel.send(str(ctx.author.mention + f"잘가시지~ {crnt_num}/{full_num}"))
+    await ctx.channel.send(str(ctx.author.mention + f" 잘가시지~ {crnt_num}/{full_num}"))
 
 @bot.command()
 async def 참가자(ctx):
