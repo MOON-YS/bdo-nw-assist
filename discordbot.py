@@ -158,10 +158,7 @@ async def 취소(ctx):
 
 @bot.command()
 async def 참가자(ctx):
-    if roleCheck(ctx):
-        await ctx.channel.send("권한이 없습니다.")
-        return;
-    
+
     global crnt_usr,crnt_num,full_num
     output = crnt_usr.to_numpy()
     output = np.sort(output[:,0])
