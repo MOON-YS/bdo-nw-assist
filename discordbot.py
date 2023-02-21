@@ -115,10 +115,15 @@ async def 신청(ctx):
     if val:
         await ctx.channel.send(str("잘못된 이름형식입니다. [길드]가문명 으로 서버닉네임을 변경해주세요"))
         return
-        
+    
+    if (full_num):
+        await ctx.channel.send(str(ctx.author.mention + "금일 거점이 설정되지 않았습니다."))
+        return
+    
     if (crnt_num == full_num) :
         await ctx.channel.send(str(ctx.author.mention + "만원!"))
         return
+    
     
     usr_name = str(ctx.author.display_name)
     usr_gld = str(ctx.author.display_name)
@@ -134,17 +139,21 @@ async def 신청(ctx):
     crnt_usr.loc[crnt_num] = [usr_name, usr_gld]
     crnt_num = crnt_num+1
     await ctx.channel.send(str(ctx.author.mention + f"감사! {crnt_num}/{full_num}"))
-    print(crnt_usr)
 
 @bot.command()
 async def 취소(ctx):
     
     global crnt_num, crnt_usr, full_num
     
+    if crnt_num == 0:
+        await ctx.channel.send("err : 리스트가 비어있습니다")
+        return
+
     usr_name = str(ctx.author.display_name)
     usr_name = usr_name.replace(' ', '')
     usr_name = usr_name[usr_name.find(']')+1:]
     usr_n = crnt_usr[crnt_usr['name'] == usr_name].first_valid_index()
+
     
     if(len(crnt_usr['name'].str.contains(usr_name)) == 0):
         await ctx.channel.send(str(ctx.author.mention + "참가하지 않은 유저입니다"))
@@ -154,7 +163,6 @@ async def 취소(ctx):
     crnt_usr.drop(usr_n, axis=0, inplace=True)
     crnt_usr.reset_index(inplace=True, drop=True)
     await ctx.channel.send(str(ctx.author.mention + f"잘가시지~ {crnt_num}/{full_num}"))
-    print(crnt_usr)
 
 @bot.command()
 async def 참가자(ctx):
