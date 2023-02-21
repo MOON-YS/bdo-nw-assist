@@ -91,7 +91,7 @@ async def setNw(ctx, arg=None):
         return;
     
     today_nw = today_nws[today_nws['area'].str.replace(' ','')==arg]
-    await ctx.channel.send(content = ""+f"{arg}이(가) 오늘의 거점전으로 설정되었습니다", allowed_mentions = discord.AllowedMentions(everyone = True))
+    await ctx.channel.send(content = "@everyone"+f"{arg}이(가) 오늘의 거점전으로 설정되었습니다", allowed_mentions = discord.AllowedMentions(everyone = True))
     np_tdnw = today_nw.to_numpy()
     full_num = int(np_tdnw[0][2])
     
