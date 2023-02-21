@@ -196,8 +196,8 @@ async def 명령어(ctx):
     s.append("/////////////////////")
     s.append("!신청 : 오늘자 거점 참여 신청")
     s.append("!취소 : 오늘자 거점 참여 취소")
-    s.append("!목록 : 오늘자 거점 참여자 목록")
-    s.append("!참가자 : 오늘자 거점 정보")
+    s.append("!참가자 : 오늘자 거점 참여자 목록")
+    s.append("!정보 : 오늘자 거점 정보")
     
     d = '```'+'\n'.join(s)+'```'
     embed = discord.Embed(title = '명령어 목록', description =d)
