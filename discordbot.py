@@ -63,7 +63,7 @@ async def setTd(ctx):
     crnt_num = 0
     today_nw = 0
     today_nws = nw_data[nw_data['date']==wd[datetime.now(timezone('Asia/Seoul')).weekday()]].astype(str)
-    print(f"updated Today: {wd(datetime.now(timezone('Asia/Seoul')).weekday())} ")
+    print(f"updated Today: {wd[datetime.now(timezone('Asia/Seoul')).weekday()]} ")
     s = [""]
     for i in range(0, today_nws['area'].count()):
         s.append(getNwInfoStr(today_nws.iloc[i]) + "\n--------------")
