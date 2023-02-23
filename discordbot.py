@@ -87,6 +87,9 @@ async def setNw(ctx, arg=None):
         return;
     
     if len(today_nw[today_nw['area'].str.replace(' ','')==arg]) == 0:
+        print(today_nw[today_nw['area'].str.replace(' ','')==arg])
+        print(today_nw['area'].str.replace(' ',''))
+        print(today_nw)
         await ctx.channel.send(f"Err: {arg}은(는) 오늘의 거점 지역이 아닙니다")
         return;
     
