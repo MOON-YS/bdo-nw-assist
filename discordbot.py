@@ -55,8 +55,8 @@ async def setTd(ctx):
     if not ctx.author.top_role.permissions.administrator:
         await ctx.channel.send(str(ctx.author.mention + "권한이 없습니다."))
         return;
-    
-    global today_nw, today_nws, full_num, np_tdnw, crnt_num, crnt_usr
+     
+    global wd ,today_nw, today_nws, full_num, np_tdnw, crnt_num, crnt_usr
     crnt_usr = pd.DataFrame(columns=['name','guild'])
     full_num = 0
     np_tdnw = 0
