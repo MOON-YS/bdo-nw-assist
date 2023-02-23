@@ -56,13 +56,14 @@ async def setTd(ctx):
         await ctx.channel.send(str(ctx.author.mention + "권한이 없습니다."))
         return;
     
-    global today_nws, full_num, np_tdnw, crnt_num, crnt_usr
+    global today_nw, today_nws, full_num, np_tdnw, crnt_num, crnt_usr
     crnt_usr = pd.DataFrame(columns=['name','guild'])
     full_num = 0
     np_tdnw = 0
     crnt_num = 0
+    today_nw = 0
     today_nws = nw_data[nw_data['date']==wd[datetime.now(timezone('Asia/Seoul')).weekday()]].astype(str)
-    
+    print(f"updated Today: {wd(datetime.now(timezone('Asia/Seoul')).weekday())} ")
     s = [""]
     for i in range(0, today_nws['area'].count()):
         s.append(getNwInfoStr(today_nws.iloc[i]) + "\n--------------")
@@ -86,10 +87,18 @@ async def setNw(ctx, arg=None):
         await ctx.channel.send("Err: 거점명을 입력하세요")
         return;
     
-    if len(today_nw[today_nw['area'].str.replace(' ','')==arg]) == 0:
-        print(today_nw[today_nw['area'].str.replace(' ','')==arg])
-        print(today_nw['area'].str.replace(' ',''))
-        print(today_nw)
+    if len(today_nws[today_nws['area'].str.replace(' ','')==arg]) == 0:
+        print('========')
+        print(arg)
+        print('========')
+        print(today_nws)
+        print('========')
+        print(today_nws['area'].str.replace(' ',''))
+        print('========')
+        print(today_nws[today_nws['area'].str.replace(' ','')==arg])
+        
+        
+
         await ctx.channel.send(f"Err: {arg}은(는) 오늘의 거점 지역이 아닙니다")
         return;
     
