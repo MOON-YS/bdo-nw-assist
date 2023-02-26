@@ -10,8 +10,8 @@ import numpy as np
 from datetime import datetime
 from discord.ext import commands
 from pytz import timezone
-import schedule
-
+from discord.ext import tasks
+import time
 
 
 PREFIX = os.environ['PREFIX']
@@ -225,17 +225,33 @@ async def sayHere(ctx):
     channel = ctx.channel
     
     print(channel.id)
+    await channel.send(f"{channel.name} set to say")
+
+@bot.command()
+async def sayTest(ctx):
+    global channel
+    if not ctx.author.top_role.permissions.administrator:
+        await ctx.channel.send(str(ctx.author.mention + " 권한이 없습니다."))
+        return
+    
     await channel.send(f"{channel.name} Test done")
 
-async def testDay():
-    print("day changed : " +  datetime.now(timezone('Asia/Seoul')))
-    if not channel == 0:
-        await channel.send(f"테스트중! {datetime.now(timezone('Asia/Seoul'))} ")
-schedule.every().day.at("00:00:01").do(testDay)
+cur_wd = 0;
+pre_wd = 0;
+@tasks.loop(seconds=1)
+async def every_day(self):
+    global cur_wd, pre_wd, channel
+    pre_wd = cur_wd
+    cur_wd = datetime.now(timezone('Asia/Seoul')).weekday()
 
-while True:
-    schedule.run_pending()
-
+    if pre_wd !=  cur_wd:
+        print(f"dayChanged : {datetime.now(timezone('Asia/Seoul'))}")
+        if channel != 0:
+            await channel.send(f"TEST MENT {datetime.now(timezone('Asia/Seoul'))}")
+    
+    time.sleep(1)
+    
+    
 try:
     bot.run(TOKEN)
 except discord.errors.LoginFailure as e:
