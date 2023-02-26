@@ -40,8 +40,6 @@ channel = 0
 full_num = 0
 crnt_num = 0
 np_tdnw = 0
-cur_wd = 0
-pre_wd = 0
 
 """
 def roleCheck(ctx):
@@ -247,14 +245,15 @@ async def sayTest(ctx):
     
     await channel.send(f"{channel.name} Test done")
 
-cur_wd = 0;
-pre_wd = 0;
+cur_wd = 0
+pre_wd = 0
 @tasks.loop(seconds=1)
 async def every_day(self):
     global cur_wd, pre_wd, channel
     pre_wd = cur_wd
     cur_wd = datetime.now(timezone('Asia/Seoul')).weekday()
-    print(datetime.now(timezone('Asia/Seoul')).weekday())
+    
+    print(datetime.now(timezone('Asia/Seoul')))
     
     if pre_wd !=  cur_wd:
         print(f"dayChanged : {datetime.now(timezone('Asia/Seoul'))}")
@@ -262,8 +261,8 @@ async def every_day(self):
             await channel.send(f"TEST MENT {datetime.now(timezone('Asia/Seoul'))}")
             time.sleep(1)
     
-    
-    
+every_day.start() 
+
 try:
     bot.run(TOKEN)
 except discord.errors.LoginFailure as e:
