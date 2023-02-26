@@ -10,11 +10,14 @@ import numpy as np
 from datetime import datetime
 from discord.ext import commands
 from pytz import timezone
+import schedule
 
 
 
 PREFIX = os.environ['PREFIX']
 TOKEN = os.environ['TOKEN']
+
+
 
 def getNwInfoStr(data):
     return "거점명: " + data['area'] + "\n최대인원: " + data['num'] + "\n단계: " + data['stage'] + "\n영지: "+ data['ter']
@@ -31,10 +34,9 @@ wd = {0:'월요일', 1:'화요일', 2:'수요일',3:'목요일',4:'금요일',5:
 @bot.event
 async def on_ready():
     print("Bot is ready")
-
-    print(datetime.now(timezone('Asia/Seoul')))
     await bot.change_presence(status=discord.Status.online, activity=discord.Game("AV"))
 
+channel = 0
 full_num = 0
 crnt_num = 0
 np_tdnw = 0
@@ -97,8 +99,6 @@ async def setNw(ctx, arg=None):
         print('========')
         print(today_nws[today_nws['area'].str.replace(' ','')==arg])
         
-        
-
         await ctx.channel.send(f"Err: {arg}은(는) 오늘의 거점 지역이 아닙니다")
         return;
     
@@ -214,6 +214,25 @@ async def 명령어(ctx):
     d = '```'+'\n'.join(s)+'```'
     embed = discord.Embed(title = '명령어 목록', description =d)
     await ctx.channel.send(embed=embed)
+
+@bot.command()
+async def sayHere(ctx):
+    global channel
+    if not ctx.author.top_role.permissions.administrator:
+        await ctx.channel.send(str(ctx.author.mention + " 권한이 없습니다."))
+        return
+
+    channel = ctx.channel
+    
+    print(channel.id)
+    await channel.send(f"{channel.name} Test done")
+
+def testDay():
+    print("day changed : " +  datetime.now(timezone('Asia/Seoul')))
+schedule.every().day.at("00:00:01").do(testDay)
+
+while True:
+    schedule.run_pending()
 
 try:
     bot.run(TOKEN)
