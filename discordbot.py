@@ -248,7 +248,7 @@ async def sayTest(ctx):
 cur_wd = 0
 pre_wd = 0
 @tasks.loop(seconds=1)
-async def every_day(self):
+async def every_day():
     global cur_wd, pre_wd, channel
     pre_wd = cur_wd
     cur_wd = datetime.now(timezone('Asia/Seoul')).weekday()
