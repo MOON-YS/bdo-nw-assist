@@ -255,12 +255,13 @@ async def every_day(self):
     pre_wd = cur_wd
     cur_wd = datetime.now(timezone('Asia/Seoul')).weekday()
     print(datetime.now(timezone('Asia/Seoul')).weekday())
+    
     if pre_wd !=  cur_wd:
         print(f"dayChanged : {datetime.now(timezone('Asia/Seoul'))}")
         if channel != 0:
             await channel.send(f"TEST MENT {datetime.now(timezone('Asia/Seoul'))}")
+            time.sleep(1)
     
-    time.sleep(1)
     
     
 try:
