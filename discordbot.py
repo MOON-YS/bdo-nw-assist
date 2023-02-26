@@ -40,6 +40,8 @@ channel = 0
 full_num = 0
 crnt_num = 0
 np_tdnw = 0
+cur_wd = -1
+pre_wd = -1
 
 """
 def roleCheck(ctx):
@@ -245,20 +247,31 @@ async def sayTest(ctx):
     
     await channel.send(f"{channel.name} Test done")
 
-cur_wd = 0
-pre_wd = 0
 @tasks.loop(seconds=1)
 async def every_day():
-    global cur_wd, pre_wd, channel
+    global cur_wd, pre_wd, channel, wd ,today_nw, today_nws, full_num, np_tdnw, crnt_num, crnt_usr
     pre_wd = cur_wd
     cur_wd = datetime.now(timezone('Asia/Seoul')).weekday()
-    
-    print(datetime.now(timezone('Asia/Seoul')))
     
     if pre_wd !=  cur_wd:
         print(f"dayChanged : {datetime.now(timezone('Asia/Seoul'))}")
         if channel != 0:
-            await channel.send(f"TEST MENT {datetime.now(timezone('Asia/Seoul'))}")
+            await channel.send(f"금일 거점전 자동 초기화 :  {datetime.now(timezone('Asia/Seoul'))}")
+
+            crnt_usr = pd.DataFrame(columns=['name','guild'])
+            full_num = 0
+            np_tdnw = 0
+            crnt_num = 0
+            today_nw = 0
+            today_nws = nw_data[nw_data['date']==wd[datetime.now(timezone('Asia/Seoul')).weekday()]].astype(str)
+            print(f"updated Today: {wd[datetime.now(timezone('Asia/Seoul')).weekday()]} ")
+            s = [""]
+            for i in range(0, today_nws['area'].count()):
+                s.append(getNwInfoStr(today_nws.iloc[i]) + "\n--------------")
+            d = '```'+'\n'.join(s)+'```'
+            embed = discord.Embed(title = '금일 1단 거점 진행 지역 리스트', description =d)
+            
+            await channel.send(embed=embed)
             time.sleep(1)
     
 every_day.start() 
