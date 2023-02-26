@@ -40,6 +40,9 @@ channel = 0
 full_num = 0
 crnt_num = 0
 np_tdnw = 0
+cur_wd = 0
+pre_wd = 0
+
 """
 def roleCheck(ctx):
     roleA = discord.utils.get(ctx.guild.role, name="아카라이브") in ctx.author.roles
@@ -54,8 +57,6 @@ crnt_usr.head(10)
 #send today nord war list (1stage)
 @bot.command()
 async def setTd(ctx):
-
-    
     if not ctx.author.top_role.permissions.administrator:
         await ctx.channel.send(str(ctx.author.mention + "권한이 없습니다."))
         return;
@@ -235,7 +236,7 @@ async def sayHere(ctx):
     channel = ctx.channel
     
     print(channel.id)
-    await channel.send(f"{channel.name} set to say")
+    await channel.send(f"{channel.name} 에서 갱신합니다.")
 
 @bot.command()
 async def sayTest(ctx):
@@ -253,7 +254,7 @@ async def every_day(self):
     global cur_wd, pre_wd, channel
     pre_wd = cur_wd
     cur_wd = datetime.now(timezone('Asia/Seoul')).weekday()
-
+    print(datetime.now(timezone('Asia/Seoul')).weekday())
     if pre_wd !=  cur_wd:
         print(f"dayChanged : {datetime.now(timezone('Asia/Seoul'))}")
         if channel != 0:
