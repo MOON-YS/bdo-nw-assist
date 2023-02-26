@@ -227,8 +227,10 @@ async def sayHere(ctx):
     print(channel.id)
     await channel.send(f"{channel.name} Test done")
 
-def testDay():
+async def testDay():
     print("day changed : " +  datetime.now(timezone('Asia/Seoul')))
+    if not channel == 0:
+        await channel.send(f"테스트중! {datetime.now(timezone('Asia/Seoul'))} ")
 schedule.every().day.at("00:00:01").do(testDay)
 
 while True:
