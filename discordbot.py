@@ -54,10 +54,16 @@ crnt_usr.head(10)
 #send today nord war list (1stage)
 @bot.command()
 async def setTd(ctx):
+
+    
     if not ctx.author.top_role.permissions.administrator:
         await ctx.channel.send(str(ctx.author.mention + "권한이 없습니다."))
         return;
-     
+    
+    if datetime.now(timezone('Asia/Seoul')).weekday() == 5:
+        await ctx.channel.send("오늘은 거점전이 진행되지 않습니다.")
+        return;
+    
     global wd ,today_nw, today_nws, full_num, np_tdnw, crnt_num, crnt_usr
     crnt_usr = pd.DataFrame(columns=['name','guild'])
     full_num = 0
@@ -75,11 +81,15 @@ async def setTd(ctx):
 
 @bot.command()
 async def setNw(ctx, arg=None):
+    
     if not ctx.author.top_role.permissions.administrator:
         await ctx.channel.send(str(ctx.author.mention + " 권한이 없습니다."))
         return;
     
     global today_nw, full_num, np_tdnw
+    if datetime.now(timezone('Asia/Seoul')).weekday() == 5:
+        await ctx.channel.send("오늘은 거점전이 진행되지 않습니다.")
+        return;
     
     if today_nws['date'].iloc[0] != wd[datetime.now(timezone('Asia/Seoul')).weekday()]:     
         await ctx.channel.send("Err: 오늘의 거점전이 갱신되지 않았습니다. !setTd를 입력하세요")
