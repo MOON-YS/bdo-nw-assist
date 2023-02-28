@@ -203,7 +203,12 @@ async def 참가자(ctx):
 @bot.command()
 async def 정보(ctx):
 
-    global today_nw
+    global today_nw, full_num
+    
+    if full_num == 0:
+        await ctx.channel.send("금일 거점이 설정되지 않았습니다")
+        return
+    
     s = [""]
     s.append(getNwInfoStr(today_nw.iloc[0]))
     d = '```'+'\n'.join(s)+'```'
@@ -271,7 +276,20 @@ async def every_day():
             d = '```'+'\n'.join(s)+'```'
             embed = discord.Embed(title = '금일 1단 거점 진행 지역 리스트', description =d)
             
+            if(len(today_nws) == 1):
+                today_nw = today_nws.iloc[0]
+                await channel.send(content = "@everyone"+f" {today_nw['area'].str} 이(가) 오늘의 거점전으로 자동 설정되었습니다", allowed_mentions = discord.AllowedMentions(everyone = True))
+                np_tdnw = today_nw.to_numpy()
+                full_num = int(np_tdnw[0][2])
+    
+                s = [""]
+                s.append(getNwInfoStr(today_nw.iloc[0]))
+                d = '```'+'\n'.join(s)+'```'
+                embed = discord.Embed(title = '금일 거점 지역', description =d)
+                await channel.send(embed=embed)
+            
             await channel.send(embed=embed)
+            
             time.sleep(1)
     
 every_day.start() 
