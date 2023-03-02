@@ -313,9 +313,9 @@ async def 드루와(ctx):
                 vch = ch
                 break
 
-    for (at_usr, at_id) in (crnt_usr["name"], crnt_usr["id"]):
+    for at_id in crnt_usr["id"]:
         is_found = False
-        print(f"{at_usr} __ {at_id}")
+        print(f"__ {at_id}")
         '''for member in vch.members:
             m_name = str(member.nick)
             m_name = m_name.replace(' ', '')
