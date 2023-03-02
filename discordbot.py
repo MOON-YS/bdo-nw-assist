@@ -305,7 +305,7 @@ async def 명령어(ctx):
 @bot.command()
 async def 드루와(ctx):
     vch = 0
-    not_in_id = []
+    not_in = []
     global crnt_usr
     for server in bot.guilds:
         for ch in server.channels:
@@ -328,9 +328,11 @@ async def 드루와(ctx):
                 break
             
         if not is_found:
-            not_in_id.append(tp_id)
             tp_usr = ctx.guild.get_member(tp_id)
-            print(tp_usr)
+            not_in.append(f"@{tp_usr.nick}")
+            
+    s = ''.join(not_in)
+    await ctx.channel.send(f"보이스 들어와요! {s}")
     
     
     
