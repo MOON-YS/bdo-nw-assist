@@ -305,7 +305,7 @@ async def 명령어(ctx):
 @bot.command()
 async def 드루와(ctx):
     vch = 0
-    not_in = []
+    not_in_id = []
     global crnt_usr
     for server in bot.guilds:
         for ch in server.channels:
@@ -328,10 +328,11 @@ async def 드루와(ctx):
                 break
             
         if not is_found:
-            not_in.append(tp_id)
-        
-    print(not_in)
-        
+            not_in_id.append(tp_id)
+            tp_usr = ctx.guild.get_member(tp_id)
+            print(tp_usr)
+    
+    
     
 @bot.command()
 async def sayHere(ctx):
@@ -345,7 +346,6 @@ async def sayHere(ctx):
         return
 
     channel = ctx.channel
-    
     await channel.send(f"{channel.name} 에서 갱신합니다.")
 
 @bot.command()
