@@ -102,7 +102,7 @@ async def setTd(ctx):
         await ctx.channel.send("오늘은 거점전이 진행되지 않습니다.")
         return
     
-    crnt_usr = pd.DataFrame(columns=['name','guild'])
+    crnt_usr = pd.DataFrame(columns=['name','guild','id'])
     full_num = 0
     np_tdnw = 0
     crnt_num = 0
@@ -208,7 +208,7 @@ async def 신청(ctx):
         return
     
     print(usr_name + " 이(가) 참여했습니다.")
-    crnt_usr.loc[crnt_num] = [usr_name, usr_gld]
+    crnt_usr.loc[crnt_num] = [usr_name, usr_gld, ctx.author.id]
     crnt_num = crnt_num+1
     
     await ctx.author.add_roles(role_attend)
@@ -313,7 +313,7 @@ async def 드루와(ctx):
                 vch = ch
                 break
 
-    for at_usr in crnt_usr['name']:
+    for at_usr, at_id in crnt_usr["name"],crnt_usr["id"]:
         is_found = False
         for member in vch.members:
             m_name = str(member.nick)
@@ -325,7 +325,7 @@ async def 드루와(ctx):
                 break
             
         if not is_found:
-            not_in.append(at_usr)
+            not_in.append(at_id)
         
     print(not_in)
         
