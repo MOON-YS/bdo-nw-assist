@@ -296,6 +296,7 @@ async def 명령어(ctx):
     s.append("!신청 : 오늘자 거점 참여 신청")
     s.append("!취소 : 오늘자 거점 참여 취소")
     s.append("!참가자 : 오늘자 거점 참여자 목록")
+    s.append("!드루와 : 보이스채널 미참가자 멘션")
     s.append("!정보 : 오늘자 거점 정보")
     
     d = '```'+'\n'.join(s)+'```'
@@ -332,7 +333,7 @@ async def 드루와(ctx):
             not_in.append(f"@{tp_usr.nick}")
             
     s = ''.join(not_in)
-    await ctx.channel.send(f"보이스 들어와요! {s}")
+    await ctx.channel.send(content=f"보이스 들어와요! \n {s}",allowed_mentions = discord.AllowedMentions(users= True))
     
     
     
