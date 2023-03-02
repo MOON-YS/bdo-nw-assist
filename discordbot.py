@@ -303,6 +303,10 @@ async def 명령어(ctx):
     await ctx.channel.send(embed=embed)
 
 @bot.command()
+async def 드루와(ctx):
+    print(ctx.guild.channel)
+    
+@bot.command()
 async def sayHere(ctx):
     global channel
     if not ctx.author.top_role.permissions.administrator:
@@ -315,7 +319,6 @@ async def sayHere(ctx):
 
     channel = ctx.channel
     
-    print(channel.id)
     await channel.send(f"{channel.name} 에서 갱신합니다.")
 
 @bot.command()
