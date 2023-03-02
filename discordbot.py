@@ -65,10 +65,11 @@ async def init(ctx):
     if is_init:
        await ctx.channel.send(str(ctx.author.mention + "이미 초기화를 했습니다."))
        return 
+    
+    print(ctx.guild.roles)
    
     if not is_roleChecked:
         for i in range(len(ctx.guild.roles)):
-            print(ctx.guild.roles[i].name)
             if(ctx.guild.roles[i].name == "참여자"):
                 role_attend = ctx.guild.roles[i]
                 is_roleChecked = True
