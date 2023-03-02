@@ -306,7 +306,7 @@ async def 명령어(ctx):
 async def 드루와(ctx):
     for server in bot.guilds:
         for ch in server.channels:
-            print(ch)
+            print(ch.type)
     
 @bot.command()
 async def sayHere(ctx):
