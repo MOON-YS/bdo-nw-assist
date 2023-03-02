@@ -314,7 +314,7 @@ async def 드루와(ctx):
                 break
     
     for member in vch.members:
-        m_name = str(member.name)
+        m_name = str(member.nick)
         m_name = m_name.replace(' ', '')
         m_name = m_name[m_name.find(']')+1:]
         print(m_name)
