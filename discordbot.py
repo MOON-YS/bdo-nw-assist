@@ -52,7 +52,7 @@ def roleCheck(ctx):
         return False
     else: return True
 """
-crnt_usr = pd.DataFrame(columns=['name','guild'])
+crnt_usr = pd.DataFrame(columns=['name','guild','id'])
 crnt_usr.head(10)
 @bot.command()
 
@@ -207,7 +207,7 @@ async def 신청(ctx):
         await ctx.channel.send(str(ctx.author.mention + " 이미 참가한 유저입니다"))
         return
     
-    print(usr_name + " 이(가) 참여했습니다.")
+    print(f"{ctx.author.id}_{usr_name} +  이(가) 참여했습니다.")
     crnt_usr.loc[crnt_num] = [usr_name, usr_gld, ctx.author.id]
     crnt_num = crnt_num+1
     
