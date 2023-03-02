@@ -304,9 +304,14 @@ async def 명령어(ctx):
 
 @bot.command()
 async def 드루와(ctx):
+    vch = 0;
     for server in bot.guilds:
         for ch in server.channels:
-            print(ch.type)
+            if str(ch.type) == 'voice':
+                vch = ch
+                break
+            
+    print(vch.members)
     
 @bot.command()
 async def sayHere(ctx):
