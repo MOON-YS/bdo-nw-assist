@@ -313,9 +313,10 @@ async def 드루와(ctx):
                 vch = ch
                 break
 
-    for at_usr, at_id in crnt_usr["name"], crnt_usr["id"]:
+    for (at_usr, at_id) in (crnt_usr["name"], crnt_usr["id"]):
         is_found = False
-        for member in vch.members:
+        print(f"{at_usr} __ {at_id}")
+        '''for member in vch.members:
             m_name = str(member.nick)
             m_name = m_name.replace(' ', '')
             m_name = m_name[m_name.find(']')+1:]
@@ -327,7 +328,7 @@ async def 드루와(ctx):
         if not is_found:
             not_in.append(at_id)
         
-    print(not_in)
+    print(not_in)'''
         
     
 @bot.command()
