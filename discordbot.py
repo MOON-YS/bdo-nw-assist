@@ -330,10 +330,10 @@ async def 드루와(ctx):
             
         if not is_found:
             tp_usr = ctx.guild.get_member(tp_id)
-            not_in.append(f"@{tp_usr.nick}")
+            not_in.append(tp_usr.mention)
             
-    s = ''.join(not_in)
-    await ctx.channel.send(content=f"보이스 들어와요! \n {s}",allowed_mentions = discord.AllowedMentions(users= True))
+ 
+    await ctx.channel.send(content=f"보이스 들어와요! \n {not_in}",allowed_mentions = discord.AllowedMentions(users= True))
     
     
     
