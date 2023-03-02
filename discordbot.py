@@ -304,13 +304,26 @@ async def 명령어(ctx):
 
 @bot.command()
 async def 드루와(ctx):
-    vch = 0;
+    vch = 0
+    n_in = []
+    global crnt_usr
     for server in bot.guilds:
         for ch in server.channels:
             if str(ch.type) == 'voice':
                 vch = ch
                 break
-            
+    
+    for member in vch.members:
+        m_name = str(member.name)
+        m_name = m_name.replace(' ', '')
+        m_name = m_name[m_name.find(']')+1:]
+        if(crnt_usr['name']==m_name).any():
+            print(f"{m_name} is in")
+        else:
+            print(f"{m_name} is'n in")
+
+        
+        
     print(vch.members)
     
 @bot.command()
