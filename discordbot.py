@@ -18,7 +18,7 @@ PREFIX = os.environ['PREFIX']
 TOKEN = os.environ['TOKEN']
 
 def getNwInfoStr(data):
-    return "거점명: " + data['area'] + "\n최대인원: " + data['num'] + "\n단계: " + data['stage'] + "\n영지: "+ data['ter']
+    return "거점명: " + data['area'] + "\n최대인원: " + data['num'] + "\n단계: " + data['stage'] + "\n채널: "+ data['ter'] + "-1"
 
 
 bot = commands.Bot(command_prefix = '!',intents=discord.Intents.all())
@@ -161,7 +161,7 @@ async def setNw(ctx, arg=None):
         return;
     
     today_nw = today_nws[today_nws['area'].str.replace(' ','')==arg]
-    await ctx.channel.send(content = "everyone"+f" {arg}이(가) 오늘의 거점전으로 설정되었습니다", allowed_mentions = discord.AllowedMentions(everyone = True))
+    await ctx.channel.send(content = "@everyone"+f" {arg}이(가) 오늘의 거점전으로 설정되었습니다", allowed_mentions = discord.AllowedMentions(everyone = True))
     np_tdnw = today_nw.to_numpy()
     full_num = int(np_tdnw[0][2])
     
@@ -332,8 +332,10 @@ async def 드루와(ctx):
             tp_usr = ctx.guild.get_member(tp_id)
             not_in.append(tp_usr.mention)
             
- 
-    await ctx.channel.send(content=f"보이스 들어와요! \n".join(not_in),allowed_mentions = discord.AllowedMentions(users= True))
+    if len(not_in) != 0:
+        await ctx.channel.send(content=f"보이스 들어와요! \n".join(not_in),allowed_mentions = discord.AllowedMentions(users= True))
+    else:
+        await ctx.channel.send(ctx.author.mention+" 전원 착석!")
     
     
     
