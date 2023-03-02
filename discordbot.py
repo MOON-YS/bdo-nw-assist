@@ -312,16 +312,16 @@ async def 드루와(ctx):
             if str(ch.type) == 'voice':
                 vch = ch
                 break
-    
-    for member in vch.members:
-        m_name = str(member.nick)
-        m_name = m_name.replace(' ', '')
-        m_name = m_name[m_name.find(']')+1:]
-        print(m_name)
-        if(crnt_usr['name']==m_name).any():
-            print(f"{m_name} is in")
-        else:
-            print(f"{m_name} is'n in")
+    for at_usr in crnt_usr['name']:
+        for member in vch.members:
+            m_name = str(member.nick)
+            m_name = m_name.replace(' ', '')
+            m_name = m_name[m_name.find(']')+1:]
+            print(m_name)
+            if at_usr == m_name:
+                print(f"{m_name} is in")
+            else:
+                print(f"{m_name} is'n in")
 
         
         
