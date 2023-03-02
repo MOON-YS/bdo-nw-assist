@@ -317,6 +317,7 @@ async def 드루와(ctx):
         m_name = str(member.name)
         m_name = m_name.replace(' ', '')
         m_name = m_name[m_name.find(']')+1:]
+        print(m_name)
         if(crnt_usr['name']==m_name).any():
             print(f"{m_name} is in")
         else:
