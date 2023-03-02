@@ -313,7 +313,7 @@ async def 드루와(ctx):
                 vch = ch
                 break
 
-    for at_usr, at_id in crnt_usr["name"],crnt_usr["id"]:
+    for at_usr, at_id in crnt_usr["name"], crnt_usr["id"]:
         is_found = False
         for member in vch.members:
             m_name = str(member.nick)
@@ -353,6 +353,11 @@ async def sayTest(ctx):
         return
     
     await channel.send(f"{channel.name} Test done")
+    
+@bot.command()
+async def dev(ctx):
+    global crnt_usr
+    print(crnt_usr)
 
 @tasks.loop(seconds=1)
 async def every_day():
