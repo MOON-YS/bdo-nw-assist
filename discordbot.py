@@ -68,6 +68,7 @@ async def init(ctx):
    
     if not is_roleChecked:
         for i in range(len(ctx.guild.roles)):
+            print(ctx.guild.roles[i].name)
             if(ctx.guild.roles[i].name == "참여자"):
                 role_attend = ctx.guild.roles[i]
                 is_roleChecked = True
