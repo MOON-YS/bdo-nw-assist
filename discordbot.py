@@ -333,7 +333,7 @@ async def 드루와(ctx):
             not_in.append(tp_usr.mention)
             
  
-    await ctx.channel.send(content=f"보이스 들어와요! \n {not_in}",allowed_mentions = discord.AllowedMentions(users= True))
+    await ctx.channel.send(content=f"보이스 들어와요! \n".join(not_in),allowed_mentions = discord.AllowedMentions(users= True))
     
     
     
