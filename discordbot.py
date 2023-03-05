@@ -318,7 +318,7 @@ async def 드루와(ctx):
         is_found = False
         tp_name = crnt_usr["name"].loc[i]
         tp_id = crnt_usr["id"].loc[i]
- 
+
         for member in vch.members:
             m_name = str(member.nick)
             m_name = m_name.replace(' ', '')
@@ -379,7 +379,7 @@ async def every_day():
         if channel != 0:
             await channel.send(f"금일 거점전 자동 초기화 :  {datetime.now(timezone('Asia/Seoul'))}")
 
-            crnt_usr = pd.DataFrame(columns=['name','guild'])
+            crnt_usr = pd.DataFrame(columns=['name','guild','id'])
             full_num = 0
             np_tdnw = 0
             crnt_num = 0
