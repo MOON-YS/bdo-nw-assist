@@ -79,6 +79,8 @@ async def init(ctx):
             return
     
     is_init = True
+    await ctx.channel.send(str(ctx.author.mention + "초기화 완료."))
+    await ctx.message.delete()
     
             
 #send today nord war list (1stage)
@@ -122,6 +124,7 @@ async def setTd(ctx):
     d = '```'+'\n'.join(s)+'```'
     embed = discord.Embed(title = '금일 1단 거점 진행 지역 리스트', description =d)
     await ctx.channel.send(embed=embed)
+    await ctx.message.delete()
 
 @bot.command()
 async def setNw(ctx, arg=None):
@@ -170,6 +173,7 @@ async def setNw(ctx, arg=None):
     d = '```'+'\n'.join(s)+'```'
     embed = discord.Embed(title = '금일 거점 지역', description =d)
     await ctx.channel.send(embed=embed)
+    await ctx.message.delete()
     
 @bot.command()
 async def 신청(ctx):
@@ -213,6 +217,7 @@ async def 신청(ctx):
     
     await ctx.author.add_roles(role_attend)
     await ctx.channel.send(str(ctx.author.mention + f" 감사! {crnt_num}/{full_num}"))
+    await ctx.message.delete()
 
 @bot.command()
 async def 취소(ctx):
@@ -246,6 +251,7 @@ async def 취소(ctx):
     crnt_num = crnt_num-1
     await ctx.author.remove_roles(role_attend)
     await ctx.channel.send(str(ctx.author.mention + f" 잘가시지~ {crnt_num}/{full_num}"))
+    await ctx.message.delete()
 
 @bot.command()
 async def 참가자(ctx):
@@ -264,6 +270,7 @@ async def 참가자(ctx):
     d = '```'+'\n'.join(s)+'```'
     embed = discord.Embed(title = '현재 참가자 리스트', description =d)
     await ctx.channel.send(embed=embed)
+    await ctx.message.delete()
 
 @bot.command()
 async def 정보(ctx):
@@ -281,6 +288,7 @@ async def 정보(ctx):
     d = '```'+'\n'.join(s)+'```'
     embed = discord.Embed(title = '금일 거점 지역', description =d)
     await ctx.channel.send(embed=embed)
+    await ctx.message.delete()
 
 @bot.command()
 async def 명령어(ctx):
@@ -302,6 +310,7 @@ async def 명령어(ctx):
     d = '```'+'\n'.join(s)+'```'
     embed = discord.Embed(title = '명령어 목록', description =d)
     await ctx.channel.send(embed=embed)
+    await ctx.message.delete()
 
 @bot.command()
 async def 드루와(ctx):
@@ -336,6 +345,7 @@ async def 드루와(ctx):
         await ctx.channel.send(content=f"보이스 들어와요! \n".join(not_in),allowed_mentions = discord.AllowedMentions(users= True))
     else:
         await ctx.channel.send(ctx.author.mention+" 전원 착석!")
+    await ctx.message.delete()
     
     
     
@@ -352,6 +362,7 @@ async def sayHere(ctx):
 
     channel = ctx.channel
     await channel.send(f"{channel.name} 에서 갱신합니다.")
+    await ctx.message.delete()
 
 @bot.command()
 async def sayTest(ctx):
