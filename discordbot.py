@@ -122,7 +122,7 @@ async def setTd(ctx):
     for i in range(0, today_nws['area'].count()):
         s.append(getNwInfoStr(today_nws.iloc[i]) + "\n--------------")
     d = '```'+'\n'.join(s)+'```'
-    embed = discord.Embed(title = '금일 1단 거점 진행 지역 리스트', description =d)
+    embed = discord.Embed(title = '금일 거점 진행 지역 리스트', description =d)
     await ctx.channel.send(embed=embed)
     await ctx.message.delete()
 
