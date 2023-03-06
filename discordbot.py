@@ -403,6 +403,10 @@ async def every_day():
             d = '```'+'\n'.join(s)+'```'
             embed = discord.Embed(title = '금일 1단 거점 진행 지역 리스트', description =d)
             
+            attends = role_attend.members
+            for usr in attends:
+                await usr.remove_roles(role_attend)
+            
             if(len(today_nws) == 1):
                 today_nw = today_nws.iloc[0]
                 tp_nwName = today_nw['area'].str
