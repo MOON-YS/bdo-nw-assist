@@ -367,7 +367,7 @@ async def dev(ctx):
     global crnt_usr
     print(crnt_usr)
 
-@tasks.loop(seconds=1)
+@tasks.loop(seconds=5)
 async def every_day():
     global cur_wd, pre_wd, channel, wd ,today_nw, today_nws, full_num, np_tdnw, crnt_num, crnt_usr
     
@@ -394,7 +394,8 @@ async def every_day():
             
             if(len(today_nws) == 1):
                 today_nw = today_nws.iloc[0]
-                await channel.send(content = "@everyone"+f" {today_nw['area'].str} 이(가) 오늘의 거점전으로 자동 설정되었습니다", allowed_mentions = discord.AllowedMentions(everyone = True))
+                tp_nwName = today_nw['area'].str
+                await channel.send(content = "@everyone"+f" {tp_nwName} 이(가) 오늘의 거점전으로 자동 설정되었습니다", allowed_mentions = discord.AllowedMentions(everyone = True))
                 np_tdnw = today_nw.to_numpy()
                 full_num = int(np_tdnw[0][2])
     
