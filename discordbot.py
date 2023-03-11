@@ -129,7 +129,7 @@ async def setTd(ctx):
 
 @bot.command()
 async def setNw(ctx, arg=None):
-    global today_nw, full_num, np_tdnw, is_init
+    global today_nw,today_nws, full_num, np_tdnw, is_init
     
     if not is_init:
         await ctx.channel.send(str(ctx.author.mention + "!init으로 초기화 해주세요"))
@@ -150,6 +150,9 @@ async def setNw(ctx, arg=None):
     if arg == None:
         await ctx.channel.send("Err: 거점명을 입력하세요")
         return;
+    if not arg > 0:
+        await ctx.channel.send(f"Err: argument error")
+        return
     
     if len(today_nws[today_nws['area'].str.replace(' ','')==arg]) == 0:
         print('========')
@@ -164,9 +167,7 @@ async def setNw(ctx, arg=None):
         await ctx.channel.send(f"Err: {arg}은(는) 오늘의 거점 지역이 아닙니다")
         return
     
-    if not arg > 0:
-        await ctx.channel.send(f"Err: argument error")
-        return
+
     
     today_nws = today_nws.reset_index(inplace=False, drop=True)
     today_nw = today_nws.loc[today_nws.index == arg]
