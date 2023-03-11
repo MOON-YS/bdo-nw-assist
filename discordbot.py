@@ -161,10 +161,16 @@ async def setNw(ctx, arg=None):
         print(today_nws[today_nws['area'].str.replace(' ','')==arg])
         
         await ctx.channel.send(f"Err: {arg}은(는) 오늘의 거점 지역이 아닙니다")
-        return;
+        return
     
-    today_nw = today_nws[today_nws['area'].str.replace(' ','')==arg]
-    await ctx.channel.send(content = "@everyone"+f" {arg}이(가) 오늘의 거점전으로 설정되었습니다", allowed_mentions = discord.AllowedMentions(everyone = True))
+    if not arg > 0:
+        await ctx.channel.send(f"Err: argument error")
+        return
+    
+    today_nws = today_nws.reset_index(inplace=False, drop=True)
+    today_nw = today_nws.loc[today_nws.index == arg]
+    td_area = today_nw.iloc[0]["area"]
+    await ctx.channel.send(content = "@everyone"+f" {td_area}이(가) 오늘의 거점전으로 설정되었습니다", allowed_mentions = discord.AllowedMentions(everyone = True))
     np_tdnw = today_nw.to_numpy()
     full_num = int(np_tdnw[0][2])
     
@@ -219,6 +225,10 @@ async def 신청(ctx):
     await ctx.channel.send(str(ctx.author.mention + f" 감사! {crnt_num}/{full_num}"))
     await ctx.message.delete()
 
+@bot.command()
+async def 참여(ctx):
+    신청(ctx)
+    
 @bot.command()
 async def 취소(ctx):
     
