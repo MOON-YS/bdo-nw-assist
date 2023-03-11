@@ -30,7 +30,7 @@ wd = {0:'월요일', 1:'화요일', 2:'수요일',3:'목요일',4:'금요일',5:
 @bot.event
 async def on_ready():
     print("Bot is ready")
-    await bot.change_presence(status=discord.Status.online, activity=discord.Game("NIKKE"))
+    await bot.change_presence(status=discord.Status.online, activity=discord.Game("v0.5b"))
 
 channel = 0
 full_num = 0
@@ -118,7 +118,7 @@ async def setTd(ctx):
     print(f"updated Today: {wd[datetime.now(timezone('Asia/Seoul')).weekday()]} ")
     s = [""]
     for i in range(0, today_nws['area'].count()):
-        s.append("["+(i+1)+"]\n")
+        s.append("["+str(i+1)+"]\n")
         s.append(getNwInfoStr(today_nws.iloc[i]) + "\n--------------")
     d = '```'+'\n'.join(s)+'```'
     embed = discord.Embed(title = '금일 거점 진행 지역 리스트', description =d)
@@ -432,7 +432,7 @@ async def every_day():
             print(f"updated Today: {wd[datetime.now(timezone('Asia/Seoul')).weekday()]} ")
             s = [""]
             for i in range(0, today_nws['area'].count()):
-                s.append("["+(i+1)+"]\n")
+                s.append("["+str(i+1)+"]\n")
                 s.append(getNwInfoStr(today_nws.iloc[i]) + "\n--------------")
             d = '```'+'\n'.join(s)+'```'
             embed = discord.Embed(title = '금일 1단 거점 진행 지역 리스트', description =d)
