@@ -175,21 +175,16 @@ async def 신청(ctx):
     if not is_init:
         await ctx.channel.send(str(ctx.author.mention + "!init으로 초기화 해주세요"))
         return
-    ve = VerEx()
-    nameTester = (ve.
-                  start_of_line().
-                  find('[').
-                  anything().
-                  find(']').
-                  anything().
-                  end_of_line())
+    val1 = '[' not in ctx.author.display_name
+    val2 = ']' not in ctx.author.display_name
 
-    name = ctx.author.display_name
-    
-    
-    if nameTester.match(name):
+    val = val1 & val2
+
+    if val:
         await ctx.channel.send(str("잘못된 이름형식입니다. [길드]가문명 으로 서버닉네임을 변경해주세요"))
         return
+    
+    
     
     if (full_num == 0):
         await ctx.channel.send(str(ctx.author.mention + " 금일 거점이 설정되지 않았습니다."))
