@@ -12,15 +12,12 @@ from discord.ext import commands
 from pytz import timezone
 from discord.ext import tasks
 import time
-from verbalexpressions import VerEx
-
 
 PREFIX = os.environ['PREFIX']
 TOKEN = os.environ['TOKEN']
 
 def getNwInfoStr(data):
     return "거점명: " + data['area'] + "\n최대인원: " + data['num'] + "\n단계: " + data['stage'] + "\n채널: "+ data['ter'] + "-1"
-
 
 bot = commands.Bot(command_prefix = '!',intents=discord.Intents.all())
 
@@ -121,6 +118,7 @@ async def setTd(ctx):
     print(f"updated Today: {wd[datetime.now(timezone('Asia/Seoul')).weekday()]} ")
     s = [""]
     for i in range(0, today_nws['area'].count()):
+        s.append("["+(i+1)+"]\n")
         s.append(getNwInfoStr(today_nws.iloc[i]) + "\n--------------")
     d = '```'+'\n'.join(s)+'```'
     embed = discord.Embed(title = '금일 거점 진행 지역 리스트', description =d)
@@ -144,15 +142,17 @@ async def setNw(ctx, arg=None):
         return;
     
     if today_nws['date'].iloc[0] != wd[datetime.now(timezone('Asia/Seoul')).weekday()]:     
-        await ctx.channel.send("Err: 오늘의 거점전이 갱신되지 않았습니다. !setTd를 입력하세요")
+        await ctx.channel.send("오늘의 거점전이 갱신되지 않았습니다. !setTd를 입력하세요")
         return;
     
     if arg == None:
-        await ctx.channel.send("Err: 거점명을 입력하세요")
+        await ctx.channel.send("거점명을 입력하세요")
         return;
+    
     if not int(arg) > 0:
-        await ctx.channel.send(f"Err: argument error")
+        await ctx.channel.send(f"ERR")
         return
+    
     ag = int(arg) - 1
     today_nws = today_nws.reset_index(inplace=False, drop=True)
     today_nw = today_nws.loc[today_nws.index == ag]
@@ -184,8 +184,6 @@ async def 신청(ctx):
         await ctx.channel.send(str("잘못된 이름형식입니다. [길드]가문명 으로 서버닉네임을 변경해주세요"))
         return
     
-    
-    
     if (full_num == 0):
         await ctx.channel.send(str(ctx.author.mention + " 금일 거점이 설정되지 않았습니다."))
         return
@@ -215,7 +213,44 @@ async def 신청(ctx):
 
 @bot.command()
 async def 참여(ctx):
-    신청(ctx)
+    global crnt_num, crnt_usr, full_num, is_init, role_attend
+    if not is_init:
+        await ctx.channel.send(str(ctx.author.mention + "!init으로 초기화 해주세요"))
+        return
+    val1 = '[' not in ctx.author.display_name
+    val2 = ']' not in ctx.author.display_name
+
+    val = val1 & val2
+
+    if val:
+        await ctx.channel.send(str("잘못된 이름형식입니다. [길드]가문명 으로 서버닉네임을 변경해주세요"))
+        return
+    
+    if (full_num == 0):
+        await ctx.channel.send(str(ctx.author.mention + " 금일 거점이 설정되지 않았습니다."))
+        return
+    
+    if (crnt_num == full_num) :
+        await ctx.channel.send(str(ctx.author.mention + " 만원!"))
+        return
+    
+    usr_name = str(ctx.author.display_name)
+    usr_gld = str(ctx.author.display_name)
+    usr_name = usr_name.replace(' ', '')
+    usr_name = usr_name[usr_name.find(']')+1:]
+    usr_gld = usr_gld[usr_gld.find('[')+1:usr_gld.find(']')]
+    
+    if(crnt_usr['name']==usr_name).any():
+        await ctx.channel.send(str(ctx.author.mention + " 이미 참가한 유저입니다"))
+        return
+    
+    print(f"{ctx.author.id}_{usr_name} +  이(가) 참여했습니다.")
+    crnt_usr.loc[crnt_num] = [usr_name, usr_gld, ctx.author.id]
+    crnt_num = crnt_num+1
+    
+    await ctx.author.add_roles(role_attend)
+    await ctx.channel.send(str(ctx.author.mention + f" 감사! {crnt_num}/{full_num}"))
+    await ctx.message.delete()
     
 @bot.command()
 async def 취소(ctx):
@@ -232,7 +267,7 @@ async def 취소(ctx):
         return
     
     if crnt_num == 0:
-        await ctx.channel.send("err : 리스트가 비어있습니다")
+        await ctx.channel.send("리스트가 비어있습니다")
         return
 
     usr_name = str(ctx.author.display_name)
@@ -397,6 +432,7 @@ async def every_day():
             print(f"updated Today: {wd[datetime.now(timezone('Asia/Seoul')).weekday()]} ")
             s = [""]
             for i in range(0, today_nws['area'].count()):
+                s.append("["+(i+1)+"]\n")
                 s.append(getNwInfoStr(today_nws.iloc[i]) + "\n--------------")
             d = '```'+'\n'.join(s)+'```'
             embed = discord.Embed(title = '금일 1단 거점 진행 지역 리스트', description =d)
