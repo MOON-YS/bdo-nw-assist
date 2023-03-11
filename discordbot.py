@@ -153,7 +153,7 @@ async def setNw(ctx, arg=None):
     if not int(arg) > 0:
         await ctx.channel.send(f"Err: argument error")
         return
-    ag = int(arg-1)
+    ag = int(arg) - 1
     today_nws = today_nws.reset_index(inplace=False, drop=True)
     today_nw = today_nws.loc[today_nws.index == ag]
     td_area = today_nw.iloc[0]["area"]
