@@ -154,23 +154,8 @@ async def setNw(ctx, arg=None):
         await ctx.channel.send(f"Err: argument error")
         return
     
-    if len(today_nws[today_nws['area'].str.replace(' ','')==arg]) == 0:
-        print('========')
-        print(arg)
-        print('========')
-        print(today_nws)
-        print('========')
-        print(today_nws['area'].str.replace(' ',''))
-        print('========')
-        print(today_nws[today_nws['area'].str.replace(' ','')==arg])
-        
-        await ctx.channel.send(f"Err: {arg}은(는) 오늘의 거점 지역이 아닙니다")
-        return
-    
-
-    
     today_nws = today_nws.reset_index(inplace=False, drop=True)
-    today_nw = today_nws.loc[today_nws.index == arg]
+    today_nw = today_nws.loc[today_nws.index == arg-1]
     td_area = today_nw.iloc[0]["area"]
     await ctx.channel.send(content = "@everyone"+f" {td_area}이(가) 오늘의 거점전으로 설정되었습니다", allowed_mentions = discord.AllowedMentions(everyone = True))
     np_tdnw = today_nw.to_numpy()
