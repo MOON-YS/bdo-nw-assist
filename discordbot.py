@@ -418,7 +418,7 @@ async def 드루와(ctx):
             not_in.append(tp_usr.mention)
             
     if len(not_in) != 0:
-        await ctx.channel.send(content=f"보이스 들어와요! \n".join(not_in),allowed_mentions = discord.AllowedMentions(users= True))
+        await ctx.channel.send(content="보이스 들어와요! \n".join(not_in)+"보이스 들어와요! \n",allowed_mentions = discord.AllowedMentions(users= True))
     else:
         await ctx.channel.send(ctx.author.mention+" 전원 착석!")
     await ctx.message.delete()
