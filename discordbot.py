@@ -347,6 +347,44 @@ async def 참가자(ctx):
     embed = discord.Embed(title = '현재 참가자 리스트', description =d)
     await ctx.channel.send(embed=embed)
     await ctx.message.delete()
+    
+@bot.command()
+async def 참여자(ctx):
+
+    global crnt_usr,crnt_num,full_num, is_init
+    
+    if not is_init:
+        await ctx.channel.send(str(ctx.author.mention + "!init으로 초기화 해주세요"))
+        return
+    output = crnt_usr.to_numpy()
+    output = np.sort(output[:,0])
+    
+    s = [f'                    {crnt_num}/{full_num}                    ']
+    for data in output:
+        s.append(data)
+    d = '```'+'\n'.join(s)+'```'
+    embed = discord.Embed(title = '현재 참가자 리스트', description =d)
+    await ctx.channel.send(embed=embed)
+    await ctx.message.delete()
+
+@bot.command()
+async def 리스트(ctx):
+
+    global crnt_usr,crnt_num,full_num, is_init
+    
+    if not is_init:
+        await ctx.channel.send(str(ctx.author.mention + "!init으로 초기화 해주세요"))
+        return
+    output = crnt_usr.to_numpy()
+    output = np.sort(output[:,0])
+    
+    s = [f'                    {crnt_num}/{full_num}                    ']
+    for data in output:
+        s.append(data)
+    d = '```'+'\n'.join(s)+'```'
+    embed = discord.Embed(title = '현재 참가자 리스트', description =d)
+    await ctx.channel.send(embed=embed)
+    await ctx.message.delete()
 
 @bot.command()
 async def 정보(ctx):
@@ -377,9 +415,9 @@ async def 명령어(ctx):
     s.append("!setTd : 오늘자 거점전 초기화")
     s.append("!setNw 번호 : 오늘자 거점 지역 지정")
     s.append("/////////////////////")
-    s.append("!신청, !참여 : 오늘자 거점 참여 신청")
+    s.append("!신청, !참여, !참가 : 오늘자 거점 참여 신청")
     s.append("!취소 : 오늘자 거점 참여 취소")
-    s.append("!참가자 : 오늘자 거점 참여자 목록")
+    s.append("!참가자, !참여자, !리스트 : 오늘자 거점 참여자 목록")
     s.append("!드루와 : 보이스채널 미참가자 멘션")
     s.append("!정보 : 오늘자 거점 정보")
     
