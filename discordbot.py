@@ -59,7 +59,7 @@ async def init(ctx):
         await ctx.channel.send(str(ctx.author.mention + "권한이 없습니다."))
         return
     
-    global wd ,today_nw, today_nws, full_num, np_tdnw, crnt_num, crnt_usr, is_roleChecked, role_attend, is_init
+    global wd ,today_nw, today_nws, full_num, np_tdnw, crnt_num, crnt_usr, is_roleChecked, role_attend, is_init, channel
     if is_init:
        await ctx.channel.send(str(ctx.author.mention + "이미 초기화를 했습니다."))
        return 
@@ -78,6 +78,8 @@ async def init(ctx):
     
     is_init = True
     await ctx.channel.send(str(ctx.author.mention + "초기화 완료."))
+    channel = ctx.channel
+    await channel.send(f"{channel.name} 에서 갱신합니다.")
     await ctx.message.delete()
     
             
@@ -251,7 +253,48 @@ async def 참여(ctx):
     await ctx.author.add_roles(role_attend)
     await ctx.channel.send(str(ctx.author.mention + f" 감사! {crnt_num}/{full_num}"))
     await ctx.message.delete()
+
+@bot.command()
+async def 참가(ctx):
+    global crnt_num, crnt_usr, full_num, is_init, role_attend
+    if not is_init:
+        await ctx.channel.send(str(ctx.author.mention + "!init으로 초기화 해주세요"))
+        return
+    val1 = '[' not in ctx.author.display_name
+    val2 = ']' not in ctx.author.display_name
+
+    val = val1 & val2
+
+    if val:
+        await ctx.channel.send(str("잘못된 이름형식입니다. [길드]가문명 으로 서버닉네임을 변경해주세요"))
+        return
     
+    if (full_num == 0):
+        await ctx.channel.send(str(ctx.author.mention + " 금일 거점이 설정되지 않았습니다."))
+        return
+    
+    if (crnt_num == full_num) :
+        await ctx.channel.send(str(ctx.author.mention + " 만원!"))
+        return
+    
+    usr_name = str(ctx.author.display_name)
+    usr_gld = str(ctx.author.display_name)
+    usr_name = usr_name.replace(' ', '')
+    usr_name = usr_name[usr_name.find(']')+1:]
+    usr_gld = usr_gld[usr_gld.find('[')+1:usr_gld.find(']')]
+    
+    if(crnt_usr['name']==usr_name).any():
+        await ctx.channel.send(str(ctx.author.mention + " 이미 참가한 유저입니다"))
+        return
+    
+    print(f"{ctx.author.id}_{usr_name} +  이(가) 참여했습니다.")
+    crnt_usr.loc[crnt_num] = [usr_name, usr_gld, ctx.author.id]
+    crnt_num = crnt_num+1
+    
+    await ctx.author.add_roles(role_attend)
+    await ctx.channel.send(str(ctx.author.mention + f" 감사! {crnt_num}/{full_num}"))
+    await ctx.message.delete()
+
 @bot.command()
 async def 취소(ctx):
     
